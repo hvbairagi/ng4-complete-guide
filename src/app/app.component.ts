@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountsService } from './accounts.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  accounts: { name: string; status: string }[] = [];
+export class AppComponent {
+  activeUsers = ['Max', 'Anna'];
+  inactiveUsers = ['Chris', 'Manu'];
 
-  constructor(private accountsService: AccountsService) {}
+  onSetToInactive(id: number) {
+    this.inactiveUsers.push(this.activeUsers[id]);
+    this.activeUsers.splice(id, 1);
+  }
 
-  ngOnInit() {
-    this.accounts = this.accountsService.accounts;
+  onSetToActive(id: number) {
+    this.activeUsers.push(this.inactiveUsers[id]);
+    this.inactiveUsers.splice(id, 1);
   }
 }

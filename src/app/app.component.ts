@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public linkToBeShown = '';
-
-  setLink(link) {
-    this.linkToBeShown = link;
-  }
 }

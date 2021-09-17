@@ -1,14 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form>
-        <input type="email" required />
+      <form (ngSubmit)="onSubmit()" #f="ngForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="email" required class="form-control" id="username" />
 
-        <select name="dropdown" id="dd">
-          <option value="Basic">Basic</option>
-          <option value="Advanced">Advanced</option>
-          <option value="Pro">Pro</option>
-        </select>
+          <label for="dd">Subscriptions</label>
+          <select name="dropdown" id="dd" class="form-control">
+            <option value="Basic">Basic</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Pro">Pro</option>
+          </select>
+
+          <label for="pd">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="pd"
+            class="form-control"
+            required
+          />
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </form>
 
       <!-- Add a Form with the following Inputs (and Validators)

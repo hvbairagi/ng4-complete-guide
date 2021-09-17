@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  disabled = false;
+  @ViewChild('f') form: NgForm;
+  defaultOption = 'Advanced';
+  data = { email: '', dropdown: '', password: '' };
+  submitted: boolean = false;
 
-  form;
+  onSubmit() {
+    this.submitted = true;
+    this.data.email = this.form.value.data.email;
+    this.data.dropdown = this.form.value.data.dropdown;
+    this.data.password = this.form.value.data.password;
+    console.log(this.data.email, this.data.dropdown, this.data.password);
 
-  onSubmit() {}
+    this.form.reset();
+  }
 }

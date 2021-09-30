@@ -31,12 +31,15 @@ export class DataStorageService {
       )
       .pipe(
         map((recipes) => {
-          return recipes.map((recipe) => {
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : [],
-            };
-          });
+          if (recipes) {
+            return recipes.map((recipe) => {
+              return {
+                ...recipe,
+                ingredients: recipe.ingredients ? recipe.ingredients : [],
+              };
+            });
+          }
+          return [];
         }),
         tap((recipes) => this.recipeService.setRecipes(recipes))
       );

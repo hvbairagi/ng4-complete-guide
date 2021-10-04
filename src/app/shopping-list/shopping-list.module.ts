@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
-import { ShoppingEditComponent } from './shopping-edit/shopping-edit.component';
-import { ShoppingListComponent } from './shopping-list.component';
 import { RouterModule } from '@angular/router';
-import { ShoppingListRoutingModule } from './shopping-list-routing.module';
 import { FormsModule } from '@angular/forms';
+
+import { ShoppingListComponent } from './shopping-list.component';
+import { ShoppingEditComponent } from './shopping-edit/shopping-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoggingService } from '../logging.service';
+import * as fromShoppingList from './store/shopping-list.reducer';
+import {StoreModule} from '@ngrx/store';
 
 @NgModule({
   declarations: [ShoppingListComponent, ShoppingEditComponent],
-  imports: [RouterModule, FormsModule, ShoppingListRoutingModule, SharedModule],
-  // providers: [LoggingService],
+  imports: [
+    FormsModule,
+    RouterModule.forChild([{ path: '', component: ShoppingListComponent }]),
+    StoreModule.forFeature('shoppingList', fromShoppingList.shoppingListReducer),
+    SharedModule
+  ],
+  // providers: [LoggingService]
 })
 export class ShoppingListModule {}

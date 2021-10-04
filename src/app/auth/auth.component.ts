@@ -6,10 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
-import { AuthService } from './auth.service';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';

@@ -99,6 +99,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ng4-complete-guide:build:production",
+            "firebaseProject": "angular-material-app-f337a",
+            "firebaseHostingSite": "angular-material-app-f337a"
+          }
         }
       }
     }

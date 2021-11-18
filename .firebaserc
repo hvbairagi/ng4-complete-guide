@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-material-app-f337a": {
+      "hosting": {
+        "ng4-complete-guide": [
+          "angular-material-app-f337a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-material-app-f337a"
+  }
+}

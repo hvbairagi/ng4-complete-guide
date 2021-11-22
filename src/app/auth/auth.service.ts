@@ -2,47 +2,72 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
-import { User } from './user.model';
+import { TrainingService } from '../training/training.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { UIService } from '../shared/ui.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   authChange = new Subject<boolean>();
-  private user: User;
+  private isAuthenticated = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AngularFireAuth,
+    private trainingService: TrainingService,
+    private uiService: UIService
+  ) {}
+
+  initAuthListener() {
+    this.auth.authState.subscribe((user) => {
+      if (user) {
+        this.isAuthenticated = true;
+        this.authChange.next(true);
+        this.router.navigate(['/training']);
+      } else {
+        this.trainingService.cancelSubscriptions();
+        this.authChange.next(false);
+        this.router.navigate(['/login']);
+        this.isAuthenticated = false;
+      }
+    });
+  }
 
   registerUser(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.authSuccessfully();
+    this.uiService.loadingStateChanged.next(true);
+    this.auth
+      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .then((result) => {
+        this.uiService.loadingStateChanged.next(false);
+      })
+      .catch((error) => {
+        this.uiService.loadingStateChanged.next(false);
+        let errorMessage = error.message.replace(/Firebase:/g, '');
+        errorMessage = errorMessage.replace(/FirebaseError:/g, '');
+        this.uiService.showSnackbar(errorMessage, null);
+      });
   }
 
   login(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.authSuccessfully();
+    this.uiService.loadingStateChanged.next(true);
+    this.auth
+      .signInWithEmailAndPassword(authData.email, authData.password)
+      .then((result) => {
+        this.uiService.loadingStateChanged.next(true);
+      })
+      .catch((error) => {
+        this.uiService.loadingStateChanged.next(false);
+        let errorMessage = error.message.replace(/Firebase:/g, '');
+        errorMessage = errorMessage.replace(/FirebaseError:/g, '');
+        this.uiService.showSnackbar(errorMessage, null);
+      });
   }
 
   logout() {
-    this.user = null;
-    this.authChange.next(false);
-    this.router.navigate(['/login']);
-  }
-
-  getUser() {
-    return { ...this.user };
+    this.auth.signOut();
   }
 
   isAuth() {
-    return this.user != null;
-  }
-
-  private authSuccessfully() {
-    this.authChange.next(true);
-    this.router.navigate(['/training']);
+    return this.isAuthenticated;
   }
 }

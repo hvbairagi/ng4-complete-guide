@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ng4-complete-guide'`, () => {
+  it(`should have as title 'standalone-components'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng4-complete-guide');
+    expect(app.title).toEqual('standalone-components');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ng4-complete-guide app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('standalone-components app is running!');
   });
 });

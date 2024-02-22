@@ -98,5 +98,7 @@
       }
     }
   },
-  "defaultProject": "ng4-complete-guide"
+  "cli": {
+    "analytics": "c4bdc8e5-ffcb-4057-8e0a-8891b5661404"
+  }
 }

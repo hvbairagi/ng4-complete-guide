@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { WelcomeComponent } from './welcome/welcome.component';
 
 @Component({
